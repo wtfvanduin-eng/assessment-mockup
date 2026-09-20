@@ -1318,6 +1318,163 @@ dialog td .acts button{padding:2px 7px;font-size:11.5px}
   .workcontrols{grid-template-columns:1fr 1fr!important}
 }
 
+
+/* === Assessment Package workflow redesign === */
+.answer{background:#f6f8f8!important}
+.result-summary{
+  position:sticky;top:0;z-index:8;
+  display:grid;grid-template-columns:1.2fr 1fr .7fr 1fr 1fr;
+  gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:10px;
+}
+.result-summary>div{background:#fff;padding:8px 10px;min-width:0}
+.rs-label{display:block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);margin-bottom:2px}
+.result-summary strong{font-size:14px}
+.result-summary.met strong{color:var(--met)}.result-summary.not strong{color:var(--gap)}.result-summary.partly strong{color:var(--some)}
+.owner-label{color:var(--mute)}
+.criteria-card,.review-card,.remediation-card{background:#fff;border:1px solid var(--line);margin-bottom:10px}
+.section-title{display:flex;justify-content:space-between;align-items:center;padding:11px 13px;border-bottom:1px solid var(--line)}
+.section-title h3,.review-card h3{font-size:13px;margin-top:2px}
+.criteria-count{font-size:11px;color:var(--mute);border:1px solid var(--line);border-radius:12px;padding:2px 7px}
+.criteria-list{padding:3px 13px 9px}
+.criterion-row{display:grid;grid-template-columns:56px minmax(0,1fr);gap:9px;padding:8px 0;border-bottom:1px solid #eef1f0}
+.criterion-row:last-child{border-bottom:0}.criterion-id{font:10.5px ui-monospace,monospace;color:var(--mute);padding-top:2px}
+.criterion-row b{font-weight:500;line-height:1.45}
+.basis-link{display:block!important;border:0!important;background:transparent!important;padding:2px 0!important;color:var(--tidal-deep)!important;font-size:10.5px!important}
+.assessment-stages{border:0;padding:0;margin:0;min-width:0}
+.assessment-stages>legend{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);padding:0 0 6px}
+.locked-assessment{opacity:.82}
+.stage-card{background:#fff;border:1px solid var(--line);margin-bottom:10px}
+.stage-head{display:flex;align-items:center;gap:10px;padding:11px 13px;border-bottom:1px solid #edf0ef}
+.stage-head>div:nth-child(2){min-width:0;flex:1}
+.stage-name{display:block;font-size:13px;font-weight:600}.stage-help{display:block;font-size:11px;color:var(--mute);margin-top:2px}
+.stage-answer{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:10px;text-transform:uppercase;color:var(--mute);flex:none}
+.stage-body{padding:11px 13px}.stage-body>label{display:block;font-size:11px;color:var(--mute);margin-bottom:4px}
+.stage-body textarea{margin-bottom:9px}
+.stage-disabled{opacity:.55}
+.evidence-list{display:flex;flex-direction:column;gap:4px;margin:6px 0}
+.evidence-item{display:flex;align-items:center;gap:7px;background:#f9fbfa;border:1px solid #e8eceb;padding:5px 7px;font-size:11.5px}
+.evicon{color:var(--met)}.evidence-empty{font-size:11.5px;color:var(--mute);padding:6px 0}
+.add-evidence{padding:4px 9px!important;color:var(--tidal-deep)!important}
+.remediation-card{padding-bottom:11px}.rem-grid{display:grid;grid-template-columns:1fr 1.2fr 150px;gap:10px;padding:10px 13px}
+.rem-grid label{font-size:10.5px;color:var(--mute)}.rem-grid input{margin-top:4px}
+.review-card{padding:12px 13px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.review-card p{font-size:11.5px;color:var(--mute);margin-top:3px}.review-actions{display:flex;gap:7px}
+.review-card.approved{border-left:3px solid var(--met)}
+.review-returned{background:#fff7eb;border:1px solid #edcf9d;padding:9px 11px;margin-bottom:10px;display:flex;gap:10px;align-items:baseline}
+.review-returned b{color:#8a6a20}.review-returned span{font-size:11.5px}
+.assessment-actions{position:sticky!important;bottom:0!important;z-index:9!important}
+.aside-card{background:#fff;border:1px solid var(--line);padding:14px;margin:12px}
+@media(max-width:1280px){
+  .result-summary{grid-template-columns:1fr 1fr}.rem-grid{grid-template-columns:1fr}.review-card{align-items:flex-start;flex-direction:column}
+}
+
+
+/* === consistent panel collapse / expand behavior === */
+.panel-shell-head{
+  flex:0 0 auto;
+  min-height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:7px 12px;
+  border-bottom:1px solid var(--line);
+  background:#fafbfb;
+}
+.panel-shell-head>div{display:flex;flex-direction:column;min-width:0}
+.panel-shell-head b{
+  font-size:11.5px;
+  font-weight:600;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.panel-shell-kicker{
+  font-size:8.5px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--mute);
+}
+.panel-toggle{
+  padding:3px 8px!important;
+  font-size:10.5px!important;
+  color:var(--tidal-deep)!important;
+  flex:none;
+}
+.answer-wrap{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  min-height:0;
+  background:var(--card);
+  border:1px solid var(--line);
+}
+.answer-wrap>.answer{
+  flex:1 1 auto;
+  min-height:0;
+  overflow:auto;
+  border:0!important;
+}
+.pane.focus-law{
+  grid-template-columns:minmax(0,1fr)!important;
+}
+.pane.focus-law>.answer-wrap{display:none!important}
+.pane.focus-answer{
+  grid-template-columns:minmax(0,1fr)!important;
+}
+.pane.focus-answer>.lawcol{display:none!important}
+
+/* clearer collapsible left rails */
+.collapse{
+  right:8px!important;
+  top:8px!important;
+}
+.colbtn{
+  padding:3px 7px!important;
+  font-size:10px!important;
+  color:var(--mute)!important;
+}
+.rail{
+  justify-content:flex-start;
+  padding:8px 4px!important;
+  gap:12px!important;
+}
+.rail-expand{
+  writing-mode:vertical-rl;
+  transform:rotate(180deg);
+  padding:7px 3px!important;
+  font-size:9.5px!important;
+  letter-spacing:.06em;
+  color:var(--tidal-deep)!important;
+}
+.rail .lab{margin-top:4px}
+
+/* Make collapse state visually intentional rather than an empty gutter. */
+main.c1 aside .rail,
+main.c2 section.queue .rail{
+  background:#fafbfb!important;
+  border-color:var(--line)!important;
+}
+main.c1{grid-template-columns:42px minmax(300px,340px) minmax(0,1fr)!important}
+main.c2{grid-template-columns:262px 42px minmax(0,1fr)!important}
+main.c1.c2{grid-template-columns:42px 42px minmax(0,1fr)!important}
+
+/* Preserve full workspace behavior on desktop. */
+@media (min-width:1100px){
+  main.c1{
+    grid-template-columns:42px minmax(300px,340px) minmax(0,1fr)!important;
+  }
+  main.c2{
+    grid-template-columns:262px 42px minmax(0,1fr)!important;
+  }
+  main.c1.c2{
+    grid-template-columns:42px 42px minmax(0,1fr)!important;
+  }
+  .pane.focus-law,.pane.focus-answer{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1328,9 +1485,9 @@ dialog td .acts button{padding:2px 7px;font-size:11.5px}
 </header>
 <main id="main" class="c1">
   <aside>
-    <div class="rail"><button type="button" data-expand="1">›</button><span class="lab" id="rail1"></span></div>
+    <div class="rail"><button type="button" class="rail-expand" data-expand="1">Expand</button><span class="lab" id="rail1"></span></div>
     <div class="card listbox">
-      <div class="collapse"><button type="button" class="colbtn" data-collapse="1" title="">‹</button></div>
+      <div class="collapse"><button type="button" class="colbtn" data-collapse="1" title="">Collapse</button></div>
       <div class="eyebrow" id="l-work"></div>
       <div class="name empty" id="wname"></div>
       <div class="count"><span id="count">0</span><small id="countsuffix"></small></div>
@@ -1344,9 +1501,9 @@ dialog td .acts button{padding:2px 7px;font-size:11.5px}
   </aside>
 
   <section class="card queue">
-    <div class="rail"><button type="button" data-expand="2">›</button><span class="lab" id="rail2"></span></div>
+    <div class="rail"><button type="button" class="rail-expand" data-expand="2">Expand</button><span class="lab" id="rail2"></span></div>
     <div class="qtop">
-      <div class="collapse"><button type="button" class="colbtn" data-collapse="2" title="">‹</button></div>
+      <div class="collapse"><button type="button" class="colbtn" data-collapse="2" title="">Collapse</button></div>
       <div class="viewrow" id="viewrow"></div>
       <div class="srch"><input type="text" id="q" autocomplete="off"><button type="button" id="b-undo" disabled></button></div>
       <div class="chips" id="chips"></div>
@@ -1357,8 +1514,20 @@ dialog td .acts button{padding:2px 7px;font-size:11.5px}
 
   <section class="card unit">
     <div class="pane" id="pane">
-      <div class="lawcol"><div class="uhead" id="uhead"></div><div class="ptabs" id="panelbar"></div><div class="members" id="members"></div></div>
-      <div class="answer" id="answer"></div>
+      <div class="lawcol">
+        <div class="panel-shell-head">
+          <div><span class="panel-shell-kicker">Legal reading</span><b>Material Provision & legal context</b></div>
+          <button type="button" class="panel-toggle" id="b-law-panel" title="Expand legal reading">Expand</button>
+        </div>
+        <div class="uhead" id="uhead"></div><div class="ptabs" id="panelbar"></div><div class="members" id="members"></div>
+      </div>
+      <div class="answer-wrap">
+        <div class="panel-shell-head">
+          <div><span class="panel-shell-kicker">Assessment</span><b>Assessment package & finding</b></div>
+          <button type="button" class="panel-toggle" id="b-answer-panel" title="Expand assessment">Expand</button>
+        </div>
+        <div class="answer" id="answer"></div>
+      </div>
     </div>
   </section>
 </main>
@@ -1582,7 +1751,7 @@ function changeState(u){
 /* ---------------- dossier + state ---------------- */
 let D={lists:[],clusterings:[],works:[],firm:null};
 let W=null;          // open work (a copy; Save writes it back)
-let S={unit:null,filter:'all',kind:'all',owner:'',actor:'',assigned:'',pass:'all',state:'all',sort:'law',groupBy:'chapter',filtersOpen:false,smartQueue:'all',view:'',panel:'scoping',panelShow:'both',legalSection:null,legalFocus:false,legalScrolls:{},q:'',force:null,hideAnswer:false,ticked:new Set(),showOutside:false,ownOpen:new Set(),auto:true,saved:null,undo:[],nextId:1};
+let S={unit:null,filter:'all',kind:'all',owner:'',actor:'',assigned:'',pass:'all',state:'all',sort:'law',groupBy:'chapter',filtersOpen:false,smartQueue:'all',view:'',panel:'scoping',panelShow:'both',legalSection:null,legalFocus:false,legalScrolls:{},panelFocus:'none',q:'',force:null,hideAnswer:false,ticked:new Set(),showOutside:false,ownOpen:new Set(),auto:true,saved:null,undo:[],nextId:1};
 function clusteringById(id){ if(id==='tidalex'&&L.tid) return {id:'tidalex',name:L.tid.label,origin:'tidalex',clusters:L.tid.clusters.map(c=>({id:c.id,name:c.id,locators:c.locators,from:c.id,from_build:L.build,since_taken:null,roles:c.roles||{},tid:c}))}; const c=D.clusterings.find(x=>x.id===id); if(!c) return null; return {id:c.id,name:c.name,origin:c.origin,clusters:c.clusters.map(x=>({...x,tid:L.tid&&L.tid.clusters.find(y=>y.id===x.from)}))}; }
 const listById=id=>D.lists.find(x=>x.id===id)||null;
 
@@ -1660,7 +1829,7 @@ function needsLook(u){ if(u.kind==='aside'||u.kind==='left') return false; const
   if(d.due&&d.due<new Date().toISOString().slice(0,10)) return true;
   if(evidenceOpen(u)) return true;
   if(changeState(u)) return true; return false; }
-function stateOf(u){ const d=baseD(u); if(d.reviewed_by) return 'reviewed'; if(d.submitted_by) return 'submitted'; return complete(u)?'draft':''; }
+function stateOf(u){ const d=baseD(u); if(d.reviewed_by) return 'reviewed'; if(d.submitted_by) return 'submitted'; return 'draft'; }
 function waitingOn(u){ const d=baseD(u); return d.waiting_who?{who:d.waiting_who,why:d.waiting_why||''}:null; }
 function evidenceOpen(u){ if(u.kind==='aside'||u.kind==='left') return false; const d=baseD(u);
   return d.implemented===true && ((d.docs||[]).some(x=>x.name&&!(x.files||[]).length) || (d.design!=null&&!(d.files||[]).length) || (d.effect!=null&&!(d.files2||[]).length)); }
@@ -2129,84 +2298,206 @@ function applicabilityGate(u){
   </div>`;
 }
 
+
+function assessmentCriteria(u){
+  const out=[]; let n=1;
+  for(const l of (u.here||[])){
+    const p=L.byLoc.get(l)||{};
+    const obs=Array.isArray(p.obligations)?p.obligations:[];
+    if(obs.length){
+      for(const o of obs){
+        if(!o || (o.modality && o.modality!=='obligation' && o.modality!=='prohibition')) continue;
+        const act=typeof o.action==='string'?o.action:(o.action&&o.action.text)||'satisfy';
+        const obj=typeof o.object==='string'?o.object:(o.object&&o.object.text)||'the legal requirement';
+        const req=Array.isArray(o.requirement)?o.requirement.map(x=>typeof x==='string'?x:(x.text||x.value||'')).filter(Boolean).join('; '):'';
+        const text=`${act.charAt(0).toUpperCase()+act.slice(1)} ${obj}${req?': '+req:''}`;
+        out.push({id:'AC-'+String(n++).padStart(3,'0'),text,basis:where(l),locator:l});
+      }
+    }else if(p.text && p.category!=='scoping'){
+      out.push({id:'AC-'+String(n++).padStart(3,'0'),text:cut(p.text,180),basis:where(l),locator:l});
+    }
+  }
+  const seen=new Set();
+  return out.filter(c=>{const k=c.text+'|'+c.basis;if(seen.has(k)) return false;seen.add(k);return true;}).slice(0,8);
+}
+function evidenceItems(cur,stage){
+  if(stage==='implementation'){
+    const items=[];
+    for(const d of (cur.docs||[])){
+      if(d.ref){ const e=libGet(d.ref); if(e) items.push({name:e.name,kind:'linked'}); }
+      else if(d.name) items.push({name:d.name,kind:'reference'});
+      for(const f of docFiles(d)) items.push({name:f.name,kind:'file'});
+    }
+    return items;
+  }
+  return (stage==='design'?(cur.files||[]):(cur.files2||[])).map(x=>({name:x.name,kind:'file'}));
+}
+function evidenceList(cur,stage){
+  const items=evidenceItems(cur,stage);
+  return `<div class="evidence-list">${items.length?items.map(x=>`<div class="evidence-item"><span class="evicon">✓</span><span>${esc(x.name)}</span></div>`).join(''):`<div class="evidence-empty">No evidence linked yet.</div>`}</div>
+    <button type="button" class="add-evidence" data-add-evidence="${stage}">+ Add evidence</button>`;
+}
+function resultSummary(u,cur){
+  const d=derive(cur), st=stateOf(u), gap=GAPS.has(d);
+  const pos=d?posWord(d):'Not assessed';
+  const sev=gap&&cur.seriousness?serWord(cur.seriousness):'—';
+  const assessOwner=assignedTo(u)||'Unassigned';
+  const remOwner=gap?(cur.owner||'Unassigned'):'—';
+  return `<div class="result-summary ${d||'none'}">
+    <div><span class="rs-label">Assessment result</span><strong>${esc(pos)}</strong></div>
+    <div><span class="rs-label">Assessment owner</span><b>${esc(assessOwner)}</b></div>
+    <div><span class="rs-label">Severity</span><b>${esc(sev)}</b></div>
+    <div><span class="rs-label">Remediation owner</span><b>${esc(remOwner)}</b></div>
+    <div><span class="rs-label">Workflow</span><b>${esc(st==='submitted'?'Waiting for review':st==='reviewed'?'Reviewed':'Draft')}</b></div>
+  </div>`;
+}
+function dlgAddEvidence(u,stage){
+  ask('Add evidence',`
+    <p>Add evidence for <b>${esc(stage==='implementation'?'Implementation & evidence':stage==='design'?'Design assessment':'Operating effectiveness')}</b>.</p>
+    <label class="f">Method</label>
+    <select id="ev-mode"><option value="reference">Record document / link reference</option><option value="upload">Upload file</option><option value="request">Request evidence from someone</option></select>
+    <label class="f">Document, link or person</label>
+    <input type="text" id="ev-ref" placeholder="e.g. ICT Risk Policy §7, SharePoint link, or Head of IT">
+    <label class="f">File (optional)</label>
+    <input type="file" id="ev-file">
+    <label class="f">Note / request</label>
+    <textarea id="ev-note" placeholder="What does this evidence prove, or what is being requested?"></textarea>
+    <div id="ev-err" style="color:var(--gap);font-size:12px;margin-top:4px"></div>`,
+    [{label:t('btn.cancel')},{label:'Add',pri:true,fn:()=>{
+      const mode=$('#ev-mode').value, ref=$('#ev-ref').value.trim(), note=$('#ev-note').value.trim(), f=$('#ev-file').files[0];
+      if(mode==='request'){
+        if(!ref){$('#ev-err').textContent='Enter who the evidence is requested from.'; return false;}
+        write(mine(u),u.cid||u.first,{waiting_who:ref,waiting_why:note||'Evidence requested'});
+        render(); return true;
+      }
+      if(!ref&&!f){$('#ev-err').textContent='Add a reference or choose a file.'; return false;}
+      const cur=baseD(u);
+      const item={name:f?f.name:ref,size:f?f.size:0};
+      if(stage==='implementation'){
+        const docs=(cur.docs&&cur.docs.length?cur.docs:[{name:'',files:[]}]).map(d=>({...d,files:(d.files||[]).slice()}));
+        docs.push({name:ref||item.name,files:f?[item]:[]});
+        write(mine(u),u.cid||u.first,{docs});
+      }else{
+        const key=stage==='design'?'files':'files2';
+        write(mine(u),u.cid||u.first,{[key]:(cur[key]||[]).concat([item])});
+      }
+      render(); return true;
+    }}]);
+}
+function dlgAsideOne(u){
+  ask('Set aside Material Provision',`<p>Set aside <b>${esc(u.name)}</b>. This is an administrative workflow exception, not a legal applicability result.</p>
+    <label class="f">Reason</label><textarea id="aside-reason" placeholder="Why is this being removed from the active assessment workflow?"></textarea>
+    <div id="aside-err" style="color:var(--gap);font-size:12px;margin-top:4px"></div>`,
+    [{label:t('btn.cancel')},{label:'Set aside',pri:true,fn:()=>{
+      const r=$('#aside-reason').value.trim(); if(!r){$('#aside-err').textContent='A reason is required.';return false;}
+      snap(t('undo.aside',{name:u.name})); W.items.aside_why=W.items.aside_why||{}; const k=u.cid||u.first;
+      if(!W.items.set_aside.includes(k)) W.items.set_aside.push(k); W.items.aside_why[k]=r; S.unit=null; render(); toast(t('msg.aside',{name:u.name})); return true;
+    }}]);
+}
+function dlgReturnReview(u){
+  ask('Return assessment',`<p>Return this assessment to the assessment owner for changes.</p>
+    <label class="f">Reviewer comment</label><textarea id="review-comment" placeholder="What needs to be changed or evidenced?"></textarea>
+    <div id="review-err" style="color:var(--gap);font-size:12px;margin-top:4px"></div>`,
+    [{label:t('btn.cancel')},{label:'Return',pri:true,fn:()=>{
+      const c=$('#review-comment').value.trim(); if(!c){$('#review-err').textContent='A reviewer comment is required.';return false;}
+      write(mine(u),u.cid||u.first,{submitted_by:'',submitted_at:'',reviewed_by:'',reviewed_at:'',review_comment:c,review_returned_by:'Reviewer',review_returned_at:nowIso()});
+      render(); toast('Returned to assessment owner.'); return true;
+    }}]);
+}
+
 function renderUnit(){
   const u=S.unit?UBY.get(S.unit):null;
   if(!W){ $('#uhead').innerHTML=''; $('#answer').innerHTML=''; $('#answer').classList.add('hidden'); $('#members').innerHTML=`<div class="empty"><h3>${esc(t('empty.nowork.title'))}</h3>${esc(t('empty.nowork.body'))}</div>`; return; }
   if(!u){ $('#uhead').innerHTML=''; $('#answer').innerHTML=''; $('#answer').classList.add('hidden'); $('#members').innerHTML=`<div class="empty"><h3>${esc(t('empty.title'))}</h3>${esc(t('empty.body'))}</div>`; return; }
-  const cl=clusteringById(W.clustering_id); const vis=visibleUnits().filter(x=>x.kind!=='left'&&x.kind!=='aside'); const i=vis.findIndex(x=>x.id===u.id);
+
+  const cl=clusteringById(W.clustering_id), vis=visibleUnits().filter(x=>x.kind!=='left'&&x.kind!=='aside'), i=vis.findIndex(x=>x.id===u.id);
   let origin='';
   if(u.kind==='cluster'||u.kind==='aside'){ origin=u.from?t('u.origin.tid',{label:esc(L.tid?L.tid.label:''),id:esc(u.from)}):t('u.origin.own'); if(u.from&&u.from_build) origin+=' · '+esc(u.from_build); if(u.since==='changed') origin+=' · '+esc(t('u.changed')); if(u.formed) origin+=' · '+t('u.formed',{rule:esc(u.formed)}); }
   const p0=L.byLoc.get(u.first)||{};
-  $('#uhead').innerHTML=`<div class="kind"><span class="eyebrow">Material Provision · ${esc(mpId(u))} · ${esc(t(u.cid?'u.kind.cluster':'u.kind.lone'))}${u.kind==='aside'?' · '+esc(t('st.aside')):''}</span><div class="nav"><span>${i>=0?esc(t('u.pos',{i:fmt(i+1),n:fmt(vis.length)})):''}</span><button type="button" id="b-prev" ${i<=0?'disabled':''}>${esc(t('u.prev'))}</button><button type="button" id="b-next" ${i<0||i>=vis.length-1?'disabled':''}>${esc(t('u.next'))}</button><button type="button" id="b-nextopen">${esc(t('u.nextopen'))}</button>${u.kind==='aside'?`<button type="button" id="b-unaside">${esc(t('q.unaside'))}</button>`:`<button type="button" id="b-aside">${esc(t('q.aside'))}</button>`}<button type="button" id="b-toggle">${esc(S.hideAnswer?t('g.show'):t('g.hide'))}</button>${u.kind==='lone'||u.kind==='aside'?`<button type="button" id="b-remove">${esc(t('q.remove'))}</button>`:''}</div></div>
+  $('#uhead').innerHTML=`<div class="kind"><span class="eyebrow">Material Provision · ${esc(mpId(u))}</span><div class="nav"><span>${i>=0?esc(t('u.pos',{i:fmt(i+1),n:fmt(vis.length)})):''}</span><button type="button" id="b-prev" ${i<=0?'disabled':''}>${esc(t('u.prev'))}</button><button type="button" id="b-next" ${i<0||i>=vis.length-1?'disabled':''}>${esc(t('u.next'))}</button><button type="button" id="b-nextopen">${esc(t('u.nextopen'))}</button>${u.kind==='aside'?`<button type="button" id="b-unaside">${esc(t('q.unaside'))}</button>`:`<button type="button" id="b-aside">${esc(t('q.aside'))}</button>`}</div></div>
     <h1>${esc(u.name)}</h1>
     <div class="sub">${u.cid?t('u.sub.cluster',{here:fmt(u.here.length),n:fmt(u.n),where:esc(where(u.starts)),origin}):(p0.act?t('u.sub.lone',{act:esc(actShort(p0.act)),kind:esc(kindLabel(p0.kind)),clustering:esc(cl.name)}):esc(t('q.unknown')))}</div>`;
-  /* answer block reads the first in-list address; the status line says how far that holds */
-  const st=status(u); const unitId=u.kind==='cluster'?u.cid:u.first; const d=baseD(u); const cur=d; const kept=u.here.filter(l=>!isCond(u,l)&&W.decisions[l]&&W.decisions[l].unit!==unitId);
-  const keptFrom=[...new Set(kept.map(l=>{const dd=W.decisions[l]; const other=UBY.get('c:'+dd.unit); return other?other.name:t('m.own.tag');}))].join(', ');
-  let written;
-  if(st.code==='none') written=u.kind==='cluster'?(u.here.length===1?t('a.written.none.one'):t('a.written.none',{n:fmt(u.here.length)})):t('a.written.none.lone');
-  else if(st.code==='mixed') written=t('a.written.cluster.part',{same:fmt(st.same),n:fmt(condOnly(u)?u.here.length:u.here.filter(l=>!isCond(u,l)).length),pos:esc(posWord(st.pos)),own:fmt(st.own),blank:fmt(st.blank)});
-  else if(kept.length&&d.position) written=t('a.written.cluster',{n:fmt(u.here.length-kept.length)});
-  else if(kept.length&&!d.position) written='';
-  else written=(u.cid?(mine(u).length===1?t('a.written.cluster.one'):t('a.written.cluster',{n:fmt(mine(u).length)})):t('a.written.lone'))+(d.at?' <span>'+esc(t('a.by',{by:d.by||'',when:whenText(d.at)}))+'</span>':'');
+
+  const st=status(u), unitId=u.kind==='cluster'?u.cid:u.first, cur=baseD(u), derived=derive(cur), workflow=stateOf(u), locked=workflow!=='draft';
   $('#answer').classList.remove('hidden'); $('#answer').classList.toggle('lone',u.kind==='lone');
-  if(u.kind==='aside'){ $('#answer').classList.remove('hidden'); const why=((W.items||{}).aside_why||{})[u.cid||u.first]; $('#answer').innerHTML=`<div class="foot" style="grid-column:1/-1">${esc(t('u.aside.note'))}${why?' '+esc(why):''}</div>`; renderMembers(u,{},{code:'aside'},{}); return; }
-  const cond=condOnly(u); const gapish=!cond&&GAPS.has(cur.position);
-  const conds=u.here.filter(l=>isCond(u,l)).length;
-  if(conds&&!cond){ const open=condOpen(u); written+=' · '+(open?t(open===1?'a.cond.open':'a.cond.open.n',{n:fmt(open)}):t(conds===1?'a.written.cond':'a.written.cond.n',{n:fmt(conds)})); }
+
+  if(u.kind==='aside'){
+    const why=((W.items||{}).aside_why||{})[u.cid||u.first];
+    $('#answer').innerHTML=`<div class="aside-card"><b>Set aside</b><p>${esc(why||'No reason recorded.')}</p><p class="hint">Administrative workflow state only; this is not “Not applicable”.</p></div>`;
+    renderMembers(u,{},{code:'aside'},{}); return;
+  }
+
+  const criteria=assessmentCriteria(u);
   const b2locked=cur.implemented!==true, b3locked=cur.design!==true;
-  const derived=derive(cur); const docs=cur.docs&&cur.docs.length?cur.docs:[{name:'',files:[]}];
-  const fileRow=(fs,kind,i)=>`<div class="files">${(fs||[]).map((f,j)=>`<span class="file">${esc(f.name)} <span class="sz">${fmt(Math.round((f.size||0)/1024))} kB</span><span class="x" data-rmfile="${kind}" data-i="${i}" data-j="${j}">×</span></span>`).join('')}<label class="up">${esc(t('g.file.add'))}<input type="file" multiple data-addfile="${kind}" data-i="${i}"></label></div>`;
+  const gap=GAPS.has(derived);
+  const reviewerComment=cur.review_comment||'';
+
   $('#answer').innerHTML=`<div class="gaps" style="grid-column:1/-1">
-      <div class="ghead"><div><span class="eyebrow">Assessment</span><span class="assessment-name">${esc(u.name)}</span></div>
-      <div class="assign">${assignedTo(u)?esc(t('u.assigned',{who:assignedTo(u)}))+` <span class="a" data-assign="">${esc(t('u.assign.drop'))}</span>`:`<span class="a" data-assign="me">${esc(t('u.assign.me'))}</span>`}</div></div>
-      ${mpStrip(u)}
-      <div class="gapq stepcard active-step">
-        <div class="qh"><div class="stephead"><span class="stepnum">1</span><div><span class="stepkicker">Internal requirements</span><span class="steptitle">${esc(cond?t('a.condition'):t('g.b1'))}</span></div></div><div class="stepanswer"><span class="lb">${esc(t('g.implemented'))}</span>${ynHtml('implemented',cur.implemented,true,'1','2')}</div></div>
-        <div class="qb docs">
-          ${docs.map((dc,i)=>`<div class="lbl">${i?'':esc(t('g.doc'))}</div><div class="doc">
-            <select data-docref="${i}"><option value="">${esc(t('lib.pick'))}</option>${lib().map(e=>`<option value="${esc(e.id)}" ${dc.ref===e.id?'selected':''}>${esc(e.name)}${(e.files||[]).length?' · '+esc(t('lib.files',{n:(e.files||[]).length})):''}</option>`).join('')}<option value="__new" ${!dc.ref&&dc.name?'selected':''}>${esc(t('lib.new'))}</option></select>
-            ${(!dc.ref)?`<input type="text" data-doc="${i}" placeholder="${esc(t('g.doc.ph'))}" value="${esc(dc.name||'')}">`:''}
-            ${fileRow(docFiles(dc),'doc',i)}${docs.length>1?`<span class="rm" data-rmdoc="${i}">${esc(t('g.doc.remove'))}</span>`:''}</div>`).join('')}
-          <div class="lbl"></div><div class="addrow"><div style="display:flex;gap:8px"><button type="button" id="a-adddoc">${esc(t('g.doc.add'))}</button><button type="button" id="a-lib">${esc(t('lib.manage'))}</button></div><div class="hint">${esc(t('g.file.note'))}</div></div>
-        </div>
-      </div>
-      <div class="gapq stepcard ${b2locked?'locked':''}">
-        <div class="qh"><div class="stephead"><span class="stepnum">2</span><div><span class="stepkicker">Test of design</span><span class="steptitle">${esc(t('g.b2'))}</span></div></div><div class="stepanswer"><span class="lb">${esc(t('g.compliant'))}</span>${b2locked?'<span class="locklabel">Complete step 1 first</span>':ynHtml('design',cur.design,true,'1','2')}</div></div>
-        <div class="qb">
-          <div class="lbl">${esc(t('g.expl'))}</div><div><textarea id="a-note" placeholder="${esc(b2locked?t('g.b2.locked'):t('g.expl.ph'))}" ${b2locked?'disabled':''}>${esc(cur.note||'')}</textarea>${snipBar('a-note')}</div>
-          <div class="lbl">${esc(t('g.evidence'))}</div><div>${fileRow(cur.files,'d',0)}${derived==='met'&&!(cur.files||[]).length?`<div style="margin-top:4px"><span class="tag warn">${esc(t('a.noevidence'))}</span></div>`:''}</div>
-        </div>
-      </div>
-      <div class="gapq stepcard ${b3locked?'locked':''}">
-        <div class="qh"><div class="stephead"><span class="stepnum">3</span><div><span class="stepkicker">Test of effectiveness</span><span class="steptitle">${esc(t('g.b3'))}</span></div></div><div class="stepanswer"><span class="lb">${esc(t('g.compliant'))}</span>${b3locked?'<span class="locklabel">Complete step 2 first</span>':ynHtml('effect',cur.effect,true,'3','4')}</div></div>
-        <div class="qb">
-          <div class="lbl">${esc(t('g.expl'))}</div><div><textarea id="a-note2" placeholder="${esc(b3locked?t('g.b3.locked'):t('g.expl.ph'))}" ${b3locked?'disabled':''}>${esc(cur.note2||'')}</textarea>${snipBar('a-note2')}</div>
-          <div class="lbl">${esc(t('g.evidence'))}</div><div>${fileRow(cur.files2,'e',0)}</div>
-        </div>
-      </div>
-      ${GAPS.has(derived)?`<div class="sevrow"><div class="lbl">${esc(t('g.severity'))}</div>${segHtml('ser',cur.seriousness,false)}<div class="note">${esc(t('g.sev.note'))}</div></div>
-        <div class="sevrow"><div class="lbl">${esc(t('a.owner'))}</div><div class="rem"><input type="text" id="a-owner" placeholder="${esc(t('a.owner.ph'))}" value="${esc(cur.owner||'')}"><input type="date" id="a-due" value="${esc(cur.due||'')}" aria-label="${esc(t('a.due'))}"></div></div>`:''}
-      ${D.firm&&D.firm.functions&&D.firm.functions.length?`<div class="sevrow"><div class="lbl">${esc(t('a.function'))}</div><select id="a-fn" style="max-width:260px"><option value="">${esc(t('a.function.none'))}</option>${D.firm.functions.map(f=>`<option ${cur.function===f.name?'selected':''}>${esc(f.name)}</option>`).join('')}</select></div>`:''}
+    <div class="ghead"><div><span class="eyebrow">Assessment</span><span class="assessment-name">${esc(u.name)}</span></div>
+      <div class="assign"><span class="owner-label">Assessment owner:</span> ${assignedTo(u)?`<b>${esc(assignedTo(u))}</b> · <span class="a" data-assign="">Release</span>`:`<span class="a" data-assign="me">Take ownership</span>`}</div>
     </div>
-    ${(()=>{const dd=baseD(u); const stt=stateOf(u); const w=waitingOn(u);
-      let line='';
-      if(stt==='reviewed') line=t('a.state.reviewed',{by:esc(dd.reviewed_by),when:whenText(dd.reviewed_at)});
-      else if(stt==='submitted') line=t('a.state.submitted',{by:esc(dd.submitted_by),when:whenText(dd.submitted_at)})+(dd.submitted_by===T['hdr.who']?' <span class="warnline">'+esc(t('a.state.selfreview'))+'</span>':'');
-      else if(stt==='draft') line=esc(t('a.state.draft'));
-      if(dd.carried_from) line=esc(t('a.carried',{name:dd.carried_from,when:whenText(dd.carried_at)}));
-      const wl=w?`<div class="waitline">${esc(t('u.waiting',{who:w.who,why:w.why}))} <span class="a" id="a-waitclear">${esc(t('a.waiting.clear'))}</span></div>`:'';
-      return (line||wl)?`<div class="stateline" style="grid-column:1/-1">${line}${wl}</div>`:'';})()}
-    <div class="foot" style="grid-column:1/-1">${derived?`<span>${t('g.derived',{pos:esc(posWord(derived))})}</span>`:''}<span>${[written,kept.length&&st.code!=='mixed'?t('a.kept',{n:fmt(kept.length),from:esc(keptFrom)}):''].filter(Boolean).join(' · ')}</span><span class="sp"></span>
-      ${kept.length?`<button type="button" id="a-force" class="${S.force===u.id?'primary':''}">${esc(S.force===u.id?t('a.forceon',{n:fmt(u.here.length)}):t('a.overwrite',{n:fmt(u.here.length)}))}</button>`:''}
-      <button type="button" id="a-copy">${esc(t('a.copy'))}</button>
-      ${baseD(u).carried_from?`<button type="button" class="primary" id="a-confirm">${esc(t('a.confirm'))}</button>`:''}
-      ${!waitingOn(u)?`<button type="button" id="a-wait">${esc(t('a.waiting.set'))}</button>`:''}
-      ${stateOf(u)==='draft'?`<button type="button" class="primary" id="a-submit">${esc(t('a.submit'))}</button>`:''}
-      ${stateOf(u)==='submitted'?`<button type="button" id="a-unsubmit">${esc(t('a.unsubmit'))}</button><button type="button" class="primary" id="a-review">${esc(t('a.review'))}</button>`:''}
-      ${stateOf(u)==='reviewed'?`<button type="button" id="a-unreview">${esc(t('a.unreview'))}</button>`:''}
-      <button type="button" id="a-clear" ${st.code==='none'?'disabled':''}>${esc(t('a.clear'))}</button></div>`;
-  renderMembers(u,cur,st,d);
+
+    ${resultSummary(u,cur)}
+    ${reviewerComment?`<div class="review-returned"><b>Returned by reviewer</b><span>${esc(reviewerComment)}</span></div>`:''}
+
+    <section class="criteria-card">
+      <div class="section-title"><div><span class="eyebrow">Assessment package</span><h3>Generated legal assessment criteria</h3></div><span class="criteria-count">${fmt(criteria.length)} criteria</span></div>
+      <div class="criteria-list">${criteria.length?criteria.map((c,j)=>`<div class="criterion-row"><span class="criterion-id">${esc(c.id)}</span><div><b>${esc(c.text)}</b><button type="button" class="basis-link" data-basis="${esc(c.locator)}">${esc(c.basis)}</button></div></div>`).join(''):`<div class="evidence-empty">No operative criteria could be derived from the supplied requirement provisions.</div>`}</div>
+    </section>
+
+    <fieldset class="assessment-stages ${locked?'locked-assessment':''}" ${locked?'disabled':''}>
+      <legend>${locked?'Assessment submitted — editing locked':'Complete the three assessment stages'}</legend>
+
+      <section class="stage-card">
+        <div class="stage-head"><span class="stepnum">1</span><div><span class="stage-name">Implementation & evidence</span><span class="stage-help">Is the required arrangement implemented, and what evidence demonstrates it?</span></div>
+          <div class="stage-answer"><span>Implemented</span>${ynHtml('implemented',cur.implemented,true,'1','2')}</div></div>
+        <div class="stage-body">${evidenceList(cur,'implementation')}</div>
+      </section>
+
+      <section class="stage-card ${b2locked?'stage-disabled':''}">
+        <div class="stage-head"><span class="stepnum">2</span><div><span class="stage-name">Design assessment</span><span class="stage-help">Does the implemented arrangement satisfy the generated legal criteria?</span></div>
+          <div class="stage-answer">${b2locked?'<span class="locklabel">Complete stage 1 first</span>':`<span>Design compliant</span>${ynHtml('design',cur.design,true,'1','2')}`}</div></div>
+        <div class="stage-body">
+          <label>Assessment rationale</label><textarea id="a-note" ${b2locked?'disabled':''} placeholder="Explain how the design satisfies or fails the legal criteria.">${esc(cur.note||'')}</textarea>
+          ${evidenceList(cur,'design')}
+        </div>
+      </section>
+
+      <section class="stage-card ${b3locked?'stage-disabled':''}">
+        <div class="stage-head"><span class="stepnum">3</span><div><span class="stage-name">Operating effectiveness</span><span class="stage-help">Does the arrangement operate effectively in practice?</span></div>
+          <div class="stage-answer">${b3locked?'<span class="locklabel">Complete stage 2 first</span>':`<span>Effective</span>${ynHtml('effect',cur.effect,true,'3','4')}`}</div></div>
+        <div class="stage-body">
+          <label>Effectiveness rationale</label><textarea id="a-note2" ${b3locked?'disabled':''} placeholder="Describe testing performed, period covered and outcome.">${esc(cur.note2||'')}</textarea>
+          ${evidenceList(cur,'effectiveness')}
+        </div>
+      </section>
+
+      ${gap?`<section class="remediation-card">
+        <div class="section-title"><div><span class="eyebrow">Finding & remediation</span><h3>Gap follow-up</h3></div></div>
+        <div class="rem-grid">
+          <label>Severity<div>${segHtml('ser',cur.seriousness,false)}</div></label>
+          <label>Remediation owner<input type="text" id="a-owner" placeholder="e.g. Head of IT, Procurement, Legal" value="${esc(cur.owner||'')}"></label>
+          <label>Due date<input type="date" id="a-due" value="${esc(cur.due||'')}"></label>
+        </div>
+      </section>`:''}
+    </fieldset>
+
+    ${workflow==='submitted'?`<section class="review-card">
+      <div><span class="eyebrow">Independent review</span><h3>Submitted by ${esc(cur.submitted_by||'assessment owner')}</h3><p>A second person reviews the assessment, evidence and legal basis.</p></div>
+      <div class="review-actions"><button type="button" id="a-return-review">Return with comment</button><button type="button" class="primary" id="a-approve-review">Approve assessment</button></div>
+    </section>`:''}
+
+    ${workflow==='reviewed'?`<section class="review-card approved"><div><span class="eyebrow">Independent review</span><h3>Approved</h3><p>Reviewed by ${esc(cur.reviewed_by||'Reviewer')} ${cur.reviewed_at?'· '+esc(whenText(cur.reviewed_at)):''}</p></div></section>`:''}
+
+    <div class="foot assessment-actions">
+      <span>${derived?`Current result: <b>${esc(posWord(derived))}</b>`:'Assessment not complete'}</span><span class="sp"></span>
+      ${workflow==='draft'?`<button type="button" id="a-wait">${esc(t('a.waiting.set'))}</button><button type="button" class="primary" id="a-submit">Submit & next</button>`:''}
+      ${workflow==='submitted'?`<button type="button" id="a-unsubmit">Reopen draft</button>`:''}
+      ${workflow==='reviewed'?`<button type="button" id="b-next-reviewed">Next Material Provision</button>`:''}
+    </div>
+  </div>`;
+
+  renderMembers(u,cur,st,{});
 }
 function itemLineHtml(u){
   const it=readItem(u);
@@ -2345,6 +2636,7 @@ function render(){
   renderLeft();
   renderQueue();
   renderUnit();
+  syncPanelFocus();
 }
 
 /* ---------------- moving ---------------- */
@@ -2532,6 +2824,27 @@ function exportWork(){
   toast(t('msg.exported',{n:fmt(rows.length-1)}));
 }
 /* ---------------- wiring ---------------- */
+
+function syncPanelFocus(){
+  const pane=$('#pane');
+  if(!pane) return;
+  pane.classList.toggle('focus-law',S.panelFocus==='law');
+  pane.classList.toggle('focus-answer',S.panelFocus==='answer');
+  const lb=$('#b-law-panel'), ab=$('#b-answer-panel');
+  if(lb){
+    lb.textContent=S.panelFocus==='law'?'Restore':'Expand';
+    lb.title=S.panelFocus==='law'?'Restore split view':'Expand legal reading';
+  }
+  if(ab){
+    ab.textContent=S.panelFocus==='answer'?'Restore':'Expand';
+    ab.title=S.panelFocus==='answer'?'Restore split view':'Expand assessment';
+  }
+}
+function setPanelFocus(which){
+  S.panelFocus=(S.panelFocus===which?'none':which);
+  syncPanelFocus();
+}
+
 function boot(){
   $$('nav.top a').forEach(a=>a.textContent=t('tab.'+a.dataset.t)); $('#eyebrow').textContent=t('hdr.eyebrow'); $('#b-load').textContent=t('hdr.load'); $('#b-readme').textContent=t('hdr.readme'); $('#b-readme').onclick=dlgReadme; $('#lang').textContent=t('hdr.lang'); $('#who').textContent=t('hdr.who');
   $('#l-work').textContent=t('left.work'); $('#b-new').textContent=t('btn.new'); $('#b-open').textContent=t('btn.open'); $('#b-save').textContent=t('btn.save'); $('#b-saveas').textContent=t('btn.saveas');
@@ -2539,8 +2852,17 @@ function boot(){
   $('#howadds').innerHTML=`<b>${esc(t('how.adds.title'))}</b> ${t('how.adds')}`;
   $('#q').placeholder=t('q.find');
   $('#rail1').textContent=t('p.work'); $('#rail2').textContent=t('p.queue');
-  $$('[data-collapse]').forEach(b=>{ b.title=t('p.collapse'); b.onclick=()=>{ $('#main').classList.add('c'+b.dataset.collapse); }; });
-  $$('[data-expand]').forEach(b=>{ b.title=t('p.expand'); b.onclick=()=>{ $('#main').classList.remove('c'+b.dataset.expand); }; });
+  $$('[data-collapse]').forEach(b=>{
+    b.textContent=t('p.collapse'); b.title=t('p.collapse'); b.setAttribute('aria-expanded','true');
+    b.onclick=()=>{ $('#main').classList.add('c'+b.dataset.collapse); b.setAttribute('aria-expanded','false'); };
+  });
+  $$('[data-expand]').forEach(b=>{
+    b.textContent=t('p.expand'); b.title=t('p.expand'); b.setAttribute('aria-expanded','false');
+    b.onclick=()=>{ $('#main').classList.remove('c'+b.dataset.expand); b.setAttribute('aria-expanded','true'); };
+  });
+  $('#b-law-panel').onclick=()=>setPanelFocus('law');
+  $('#b-answer-panel').onclick=()=>setPanelFocus('answer');
+  syncPanelFocus();
   $('#howkeys').onclick=e=>{ if(e.target.closest('.sw')){ S.auto=!S.auto; $('#autocb').classList.toggle('full',S.auto); } };
   $('#layerfile').onchange=async e=>{ const f=e.target.files[0]; if(!f) return; try{ loadLayer(JSON.parse(await f.text())); D=demoDossier(); S.saved=null; W=null; if(D.works.length) openWork(D.works[0]); else render(); toast(t('msg.layer',{v:L.version,n:fmt(L.provisions.length),c:fmt(L.tid?L.tid.clusters.length:0)})); }catch(err){ console.error(err); toast(t('msg.layer.bad')); } };
   $('#b-new').onclick=()=>guardUnsaved(dlgNew); $('#b-open').onclick=()=>guardUnsaved(dlgOpen); $('#b-save').onclick=save; $('#b-saveas').onclick=dlgSaveAs;
@@ -2607,23 +2929,31 @@ function boot(){
   };
   $('#uhead').onclick=e=>{ const b=e.target.closest('button'); const u=UBY.get(S.unit); if(!b) return; if(b.id==='b-toggle'){ S.hideAnswer=!S.hideAnswer; $('#pane').classList.toggle('hid',S.hideAnswer); b.textContent=S.hideAnswer?t('g.show'):t('g.hide'); return; }
     if(b.id==='b-prev') goPrev(); if(b.id==='b-next') goNext(false); if(b.id==='b-nextopen') goNext(true);
-    if(b.id==='b-aside'&&u){ snap(t('undo.aside',{name:u.name})); W.items.set_aside.push(u.kind==='cluster'?u.cid:u.first); render(); toast(t('msg.aside',{name:u.name})); }
+    if(b.id==='b-aside'&&u){ return dlgAsideOne(u); }
     if(b.id==='b-unaside'&&u){ snap(t('undo.unaside',{name:u.name})); const k=u.cid||u.first; W.items.set_aside=W.items.set_aside.filter(x=>x!==k); render(); toast(t('msg.unaside',{name:u.name})); }
     if(b.id==='b-remove'&&u){ snap(t('undo.remove',{name:u.name})); W.items.added=W.items.added.filter(x=>x!==u.first); if(!W.items.removed.includes(u.first)) W.items.removed.push(u.first); W.items.set_aside=W.items.set_aside.filter(x=>x!==u.first); S.unit=null; render(); toast(t('msg.removed2',{name:u.name})); } };
   $('#answer').onclick=e=>{ const u=UBY.get(S.unit); if(!u) return;
     if(e.target.id==='a-waitclear'){ snap(t('undo.waiting',{name:u.name})); write(mine(u),u.cid||u.first,{waiting_who:'',waiting_why:''}); render(); return; }
     const ag=e.target.closest('[data-assign]'); if(ag){ snap(t('undo.assign',{n:'1'})); write(mine(u),u.cid||u.first,{assigned:ag.dataset.assign==='me'?T['hdr.who']:''}); render(); return; }
     const b=e.target.closest('button'); if(!b) return;
-    if(b.id==='a-submit'){ snap(t('undo.submit',{name:u.name})); write(mine(u),u.cid||u.first,{submitted_by:T['hdr.who'],submitted_at:nowIso(),reviewed_by:'',reviewed_at:''}); render(); toast(t('msg.submitted')); return; }
+    if(b.id==='a-submit'){
+      if(!derive(baseD(u))){ toast('Complete all required assessment stages before submitting.'); return; }
+      snap(t('undo.submit',{name:u.name})); write(mine(u),u.cid||u.first,{submitted_by:T['hdr.who'],submitted_at:nowIso(),reviewed_by:'',reviewed_at:'',review_comment:''});
+      toast('Submitted for independent review. Opening next assessment.'); render(); goNext(true); return;
+    }
     if(b.id==='a-unsubmit'){ snap(t('undo.submit',{name:u.name})); write(mine(u),u.cid||u.first,{submitted_by:'',submitted_at:'',reviewed_by:'',reviewed_at:''}); render(); toast(t('msg.unsubmitted')); return; }
-    if(b.id==='a-review'){ snap(t('undo.review',{name:u.name})); write(mine(u),u.cid||u.first,{reviewed_by:T['hdr.who'],reviewed_at:nowIso()}); render(); toast(t('msg.reviewed')); return; }
-    if(b.id==='a-unreview'){ snap(t('undo.review',{name:u.name})); write(mine(u),u.cid||u.first,{reviewed_by:'',reviewed_at:''}); render(); return; }
+    if(b.id==='a-approve-review'){ write(mine(u),u.cid||u.first,{reviewed_by:'Reviewer',reviewed_at:nowIso(),review_comment:''}); render(); toast('Assessment approved.'); return; }
+    if(b.id==='a-return-review') return dlgReturnReview(u);
+    if(b.id==='b-next-reviewed'){ goNext(false); return; }
+    if(b.dataset.addEvidence) return dlgAddEvidence(u,b.dataset.addEvidence);
+    if(b.dataset.basis){ S.legalSection=null; S.legalFocus=false; renderUnit(); const loc=b.dataset.basis; setTimeout(()=>{const el=document.querySelector(`[data-own="${CSS.escape(loc)}"]`); if(el) el.scrollIntoView({block:'center'});},0); return; }
     if(b.id==='a-wait') return dlgWait(u);
     if(b.id==='a-lib') return dlgLib();
     if(b.id==='a-copy') return copyPrevious(u);
     if(b.id==='a-confirm'){ snap(t('undo.confirm',{name:u.name})); write(mine(u),u.cid||u.first,{carried_from:'',carried_at:'',by:T['hdr.who'],at:nowIso()}); render(); toast(t('msg.confirmed')); return; }
     if(b.dataset.snipsave!==undefined){ const el=$('#'+b.dataset.snipsave); const v=(el&&el.value||'').trim(); if(!v) return; if(!snips().includes(v)) snips().push(v); renderUnit(); toast(t('msg.snipsaved')); return; }
     if(b.id==='a-clear') return clearUnit(u); if(b.id==='a-force'){ const d=baseD(u); if(!d.position){ S.force=S.force===u.id?null:u.id; renderUnit(); return; } snap(t('undo.answer',{name:u.name})); write(u.here,u.kind==='cluster'?u.cid:u.first,{position:d.position,seriousness:d.seriousness||null,note:d.note||'',evidence:d.evidence||'',owner:d.owner||'',due:d.due||''}); S.ownOpen.clear(); render(); return; } if(b.id==='a-adddoc'){ const cur=baseD(u); const docs=(cur.docs&&cur.docs.length?cur.docs:[{name:'',files:[]}]).concat([{name:'',files:[]}]); snap(t('undo.note',{name:u.name})); write(mine(u),u.cid||u.first,{docs}); render(); return; }
+    if(stateOf(u)!=='draft') return;
     if(b.dataset.yn) return answerUnit(u,b.dataset.yn,b.dataset.v==='true'); if(b.dataset.q==='ser') answerUnit(u,'seriousness',b.dataset.v); };
   $('#answer').addEventListener('click',e=>{ const u=UBY.get(S.unit); if(!u) return;
     const rm=e.target.closest('[data-rmdoc]'); if(rm){ const cur=baseD(u); const docs=(cur.docs||[]).slice(); docs.splice(+rm.dataset.rmdoc,1); snap(t('undo.note',{name:u.name})); write(mine(u),u.cid||u.first,{docs:docs.length?docs:[{name:'',files:[]}]}); render(); return; }
